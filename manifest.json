@@ -1,0 +1,41 @@
+{
+    "short_name": "Dialogflow",
+    "name": "Dialogflow Progressive WebApp",
+    "icons": [
+      {
+        "src": "https://console.dialogflow.com/api-client/assets/img/logo-short.png",
+        "type": "image/png",
+        "sizes": "48x48"
+      },
+      {
+        "src": "https://console.dialogflow.com/api-client/assets/img/logo-short.png",
+        "type": "image/png",
+        "sizes": "72x72"
+      },
+      {
+        "src": "https://console.dialogflow.com/api-client/assets/img/logo-short.png",
+        "type": "image/png",
+        "sizes": "96x96"
+      },
+      {
+        "src": "https://console.dialogflow.com/api-client/assets/img/logo-short.png",
+        "type": "image/png",
+        "sizes": "144x144"
+      },
+      {
+        "src": "https://console.dialogflow.com/api-client/assets/img/logo-short.png",
+        "type": "image/png",
+        "sizes": "192x192"
+      },
+      {
+        "src": "https://console.dialogflow.com/api-client/assets/img/logo-short.png",
+        "type": "image/png",
+        "sizes": "512x512"
+      }
+    ],
+    "start_url": "index.html",
+    "background_color": "#FFFFFF",
+    "theme_color": "#FF9800",
+    "display": "standalone",
+    "orientation": "portrait"
+  }
