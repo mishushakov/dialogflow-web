@@ -10,12 +10,13 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="msapplication-tap-highlight" content="no">
 
-        <!-- Chrome on Android -->
+        <!-- Google Chrome -->
         <meta name="mobile-web-app-capable" content="yes">
         <link rel="icon" href="https://console.dialogflow.com/api-client/assets/img/logo-short.png">
         <link rel="manifest" href="/manifest.json">
+        <meta name="theme-color" content="#FF9800">
 
-        <!-- Safari on iOS -->
+        <!-- Safari -->
         <meta name="apple-mobile-web-app-capable" content="yes">
         <link rel="apple-touch-icon" href="https://console.dialogflow.com/api-client/assets/img/logo-short.png">
 
@@ -27,6 +28,7 @@
         <meta property="og:url" content="https://example.com">
         <meta property="og:type" content="website" />
 
+        <!-- Twitter -->
         <meta name="twitter:card" content="summary" />
         <meta name="twitter:description" content="Dialogflow unofficial Progressive Web App" />
         <meta name="twitter:title" content="Dialogflow for Web" />
@@ -35,13 +37,6 @@
         <!-- Windows 8 -->
         <meta name="msapplication-TileImage" content="https://console.dialogflow.com/api-client/assets/img/logo-short.png">
         <meta name="msapplication-TileColor" content="#FF9800">
-
-        <!-- Android Statusbar color -->
-        <meta name="theme-color" content="#FF9800">
-
-        <!--  Packages -->
-        <link rel="stylesheet" href="https://unpkg.com/material-components-web@0.20.0/dist/material-components-web.min.css">
-        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
         
         <script type="application/ld+json">
         {
@@ -70,15 +65,16 @@
         <script src="dist/build.js"></script>
 
         <script>
-        if ('serviceWorker' in navigator) {
-            window.addEventListener('load', function() {
-            navigator.serviceWorker.register('/worker.js')
-            })
-        }
+            if ('serviceWorker' in navigator) {
+                window.addEventListener('load', function() {
+                navigator.serviceWorker.register('/worker.js')
+                })
+            }
         </script>
 
         <noscript>
-            <p class="mdc-typography--headline">Hello, it looks like your JavaScript is disabled, please enable it, since the page can't render without it</p>
+            <h1>:(</h1>
+            <p>Hello, it looks like your JavaScript is disabled, please enable it, since the page can't render without it</p>
         </noscript>
     </body>
 </html>

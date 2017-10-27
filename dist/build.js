@@ -10786,6 +10786,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
 
 
 const client = new __WEBPACK_IMPORTED_MODULE_0_api_ai_javascript__["a" /* ApiAiClient */]({ accessToken: '9d686a47b1de48bab431e94750d1cd87' });
@@ -10815,7 +10817,7 @@ const client = new __WEBPACK_IMPORTED_MODULE_0_api_ai_javascript__["a" /* ApiAiC
             this.submit();
         },
         microphone(mode) {
-            this.micro = mode;
+            this.micro = mode; // <- to be honest, it doesn't do anything, because im to lazy to download chrome to implement WebSpeech API
         }
     }
 });
@@ -10843,7 +10845,9 @@ new __WEBPACK_IMPORTED_MODULE_0_vue__["a" /* default */]({
 
 exports = module.exports = __webpack_require__(14)();
 // imports
+exports.push([module.i, "@import url(https://unpkg.com/material-components-web@0.20.0/dist/material-components-web.min.css);", ""]);
 exports.push([module.i, "@import url(https://fonts.googleapis.com/css?family=Roboto);", ""]);
+exports.push([module.i, "@import url(https://fonts.googleapis.com/icon?family=Material+Icons);", ""]);
 
 // module
 exports.push([module.i, "body{margin:0;background-color:#f5f5f5;font-family:Roboto,sans-serif}.ai-window,.wrapper{max-width:500px;margin-left:auto;margin-right:auto}.ai-window{padding:1rem}.query{padding:16px 0;background-color:#fff;box-shadow:0 1px 3px rgba(0,0,0,.12),0 1px 2px rgba(0,0,0,.24);z-index:999;position:fixed;width:100%}.queryform{border:0;width:80%;margin-left:60px;font-size:16px;outline:none;color:rgba(0,0,0,.8);font-weight:500;caret-color:red}.fade-enter-active,.fade-leave-active{transition:opacity .5s}.fade-enter,.fade-leave-to{opacity:0}.wrapper:hover>.iicon{color:#ff9800}.iicon{margin-left:20px;position:absolute;vertical-align:middle;color:rgba(0,0,0,.8);cursor:pointer}.chat-window{width:100%}.bubble{max-width:300px;background-color:#e1e1e1;padding:16px;border-radius:8px;color:rgba(0,0,0,.7);float:right}.bubble.bot{background-color:#fff;float:left;margin-right:10px}td{margin-top:30px;margin-bottom:10px}.mdc-card{background-color:#fff;max-width:300px}.openlink{vertical-align:middle;margin-top:-5px;margin-left:5px}.mdc-card__media-item{height:auto;width:100%}.mdc-card__action{color:#ff9800}.chips{margin-left:-10px}.suggestion{margin-top:10px;float:left;margin-left:10px;padding:10px;border:2px solid rgba(0,0,0,.4);color:rgba(0,0,0,.4);border-radius:6px;cursor:pointer}.suggestion:active{border:2px solid #000;color:#000}.suggestion.link{color:#fff;background-color:#ff9800;border:2px solid #ff9800}.suggestion.link:active{background-color:#cc7a00;border:2px solid #cc7a00}.copyright{font-weight:600;color:rgba(0,0,0,.8)}.copyright a{text-decoration:none;color:rgba(0,0,0,.8);border-bottom:2px solid transparent}.copyright a:hover{color:#ff9800;border-bottom:2px solid #ff9800}", ""]);

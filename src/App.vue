@@ -97,7 +97,9 @@
 </template>
 
 <style lang="sass">
+@import url('https://unpkg.com/material-components-web@0.20.0/dist/material-components-web.min.css')
 @import url('https://fonts.googleapis.com/css?family=Roboto')
+@import url('https://fonts.googleapis.com/icon?family=Material+Icons')
 
 $color: #FF9800
 
@@ -257,7 +259,7 @@ export default {
             this.submit()
         },
         microphone(mode){
-            this.micro = mode
+            this.micro = mode // <- to be honest, it doesn't do anything, because im to lazy to download chrome to implement WebSpeech API
         }
     }
 }
