@@ -29,6 +29,7 @@
                 <td>
 
                     <!-- Bot speech output -->
+
                     <div v-if="a.result.fulfillment.speech" class="bubble bot">
                         {{a.result.fulfillment.speech}}
                     </div>
@@ -52,19 +53,41 @@
                             </section>
                         </div>
 
+                        <!-- Bot message types / Carousel Card -->
+                        <div class="slider" v-if="r.type == 'carousel_card'">
+                            <carousel perPage=1 
+                                    :navigationEnabled="true"
+                                    :paginationEnabled="false"
+                                    navigationNextLabel="<button class='mdc-fab material-icons'><span class='mdc-fab__icon'>keyboard_arrow_right</span></button>"
+                                    navigationPrevLabel="<button class='mdc-fab material-icons'><span class='mdc-fab__icon'>keyboard_arrow_left</span></button>"
+                                    :navigationClickTargetSize="0">
+
+                                <slide v-for="item in r.items">
+                                    <div class="mdc-card slide">
+                                        <img class="mdc-card__media-item" :src="item.image.url">
+                                        <section class="mdc-card__primary">
+                                            <h1 class="mdc-card__title mdc-card__title">{{item.title}}</h1>
+                                        </section>
+                                        <section class="mdc-card__supporting-text">
+                                            {{item.description}}
+                                        </section>
+                                    </div>
+                                </slide>
+                            </carousel>
+                        </div>
+
                         <!-- Bot message types / List -->
 
                         <div class="mdc-list-group mdc-card" v-if="r.type == 'list_card'">
                             <h3 class="mdc-list-group__subheader">{{r.title}}</h3>
-                            <ul class="mdc-list" v-for="item in r.items">
-                                <span class="mdc-list-item__text">
-                                    {{item.title}}
+                            <ul class="mdc-list mdc-list--two-line mdc-list--avatar-list" v-for="item in r.items" @click="autosubmit(item.optionInfo.key)">
+                                <li class="mdc-list-item">
+                                    <img class="mdc-list-item__start-detail" width="56" height="56" :src="item.image.url" v-if="item.image"/>
+                                    <span class="mdc-list-item__text">
+                                        {{item.title}}
                                     <span class="mdc-list-item__text__secondary">{{item.description}}</span>
-                                </span>
-
-                                <br>
-                                <br>
-
+                                    </span>
+                                </li>
                             </ul>
                         </div>
 
@@ -174,6 +197,19 @@ td
 .mdc-card
     background-color: white
     max-width: 300px
+    margin-bottom: 5px
+
+.slide
+    margin: 10px
+    max-width: 300px
+
+.slider
+    max-width: 300px
+
+.mdc-fab
+    background-color: $color
+    @media screen and (max-width: 720px)
+        display: none
 
 .openlink
     vertical-align: middle
@@ -183,6 +219,7 @@ td
 .mdc-card__media-item
     height: auto
     width: 100%
+    margin-top: -5px
 
 .mdc-card__action
     color: $color
@@ -191,7 +228,7 @@ td
     margin-left: -10px
 
 .suggestion
-    margin-top: 15px
+    margin-top: 10px
     float: left
     margin-left: 10px
     padding: 10px
@@ -212,6 +249,9 @@ td
 .suggestion.link:active
     background-color: darken($color, 10%)
     border: 2px darken($color, 10%) solid
+
+.mdc-list-item__start-detail
+    border-radius: 50%
 
 .copyright
     font-weight: 600

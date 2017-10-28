@@ -3955,6 +3955,10 @@ vm-browserify@0.0.4:
   dependencies:
     indexof "0.0.1"
 
+vue-carousel@^0.6.5:
+  version "0.6.5"
+  resolved "https://registry.yarnpkg.com/vue-carousel/-/vue-carousel-0.6.5.tgz#f04e4485ce6ac2404eaff186923f7ad057839205"
+
 vue-hot-reload-api@^2.0.11:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/vue-hot-reload-api/-/vue-hot-reload-api-2.1.0.tgz#9ca58a6e0df9078554ce1708688b6578754d86de"

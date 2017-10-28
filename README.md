@@ -31,9 +31,9 @@ This is an unofficial Web client for Dialogflow, i built it, to support Google A
 - Suggestions Chips
 - Link chips
 - WebSpeech API for voice input(BETA)
+- Carousel Cards
 
 ## What will be supported very soon
-- Carousel Card
 - Custom inputs and elements using custom payload
 - More animations and visual feedback
 - Widget mode, where you can add this app as an popup for your website
