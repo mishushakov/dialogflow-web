@@ -54,13 +54,15 @@
                         </div>
 
                         <!-- Bot message types / Carousel Card -->
+
                         <div class="slider" v-if="r.type == 'carousel_card'">
                             <carousel perPage=1 
                                     :navigationEnabled="true"
                                     :paginationEnabled="false"
-                                    navigationNextLabel="<button class='mdc-fab material-icons'><span class='mdc-fab__icon'>keyboard_arrow_right</span></button>"
-                                    navigationPrevLabel="<button class='mdc-fab material-icons'><span class='mdc-fab__icon'>keyboard_arrow_left</span></button>"
-                                    :navigationClickTargetSize="0">
+                                    navigationNextLabel="<button class='mdc-fab material-icons rightnav'><span class='mdc-fab__icon'>keyboard_arrow_right</span></button>"
+                                    navigationPrevLabel="<button class='mdc-fab material-icons leftnav'><span class='mdc-fab__icon'>keyboard_arrow_left</span></button>"
+                                    :navigationClickTargetSize="0"
+                                    :loop="true">
 
                                 <slide v-for="item in r.items">
                                     <div class="mdc-card slide">
@@ -200,14 +202,24 @@ td
     margin-bottom: 5px
 
 .slide
-    margin: 10px
+    margin: 5px
     max-width: 300px
 
 .slider
     max-width: 300px
 
 .mdc-fab
-    background-color: $color
+    background-color: white
+    color: $color
+    
+.rightnav
+    @media screen and (max-width: 720px) 
+            margin-left: -35px
+
+    @media screen and (max-width: 320px) 
+            margin-left: -65px
+
+.leftnav
     @media screen and (max-width: 720px)
         display: none
 
@@ -304,8 +316,6 @@ export default {
 
             if(mode == true){
                 let recognition = new webkitSpeechRecognition()
-                if(recognition == undefined) self.speech = 'Your browser doesnt support WebSpeech API' // <- notify user, that his browser doesn't support speech recognition
-
                 recognition.lang = "en-US"
 			    recognition.start()
                 self.speech = ''
