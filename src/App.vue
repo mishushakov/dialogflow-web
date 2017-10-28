@@ -7,7 +7,7 @@
             <i class="material-icons iicon" @click="microphone(true)">keyboard</i><input aria-label="Ask me something" autocomplete="off" v-model="query" class="queryform" @keyup.enter="submit()" placeholder="Ask me something..." autofocus type="text">        
         </div>
         <div class="wrapper" v-else>
-            <i class="material-icons iicon" @click="microphone(false)">mic</i><input aria-label="Microphone Input" class="queryform" placeholder="Go ahead, im listening..." disabled>   
+            <i class="material-icons iicon" @click="microphone(false)">mic</i><input class="queryform" :placeholder="speech" disabled>   
         </div>
     </div>
 
@@ -97,9 +97,7 @@
 </template>
 
 <style lang="sass">
-@import url('https://unpkg.com/material-components-web@0.20.0/dist/material-components-web.min.css')
 @import url('https://fonts.googleapis.com/css?family=Roboto')
-@import url('https://fonts.googleapis.com/icon?family=Material+Icons')
 
 $color: #FF9800
 
@@ -193,7 +191,7 @@ td
     margin-left: -10px
 
 .suggestion
-    margin-top: 10px
+    margin-top: 15px
     float: left
     margin-left: 10px
     padding: 10px
@@ -240,6 +238,7 @@ export default {
         return {
             answers: [],
             query: '',
+            speech: 'Go ahead, im listening...',
             micro: false
         }
     },
@@ -250,6 +249,7 @@ export default {
 
                 this.answers.push(response)
                 this.query = ''
+                this.speech = 'Go ahead, im listening...' // <- reset query and speech
 
                 //window.scrollTo(0, document.body.scrollHeight) <- Uncomment this if you want autoscroll
             })
@@ -259,7 +259,30 @@ export default {
             this.submit()
         },
         microphone(mode){
-            this.micro = mode // <- to be honest, it doesn't do anything, because im to lazy to download chrome to implement WebSpeech API
+            this.micro = mode
+            let self = this // <- correct scope
+
+            if(mode == true){
+                let recognition = new webkitSpeechRecognition()
+                if(recognition == undefined) self.speech = 'Your browser doesnt support WebSpeech API' // <- notify user, that his browser doesn't support speech recognition
+
+                recognition.lang = "en-US"
+			    recognition.start()
+                self.speech = ''
+                
+                recognition.onresult = function(event) {
+			        for (var i = event.resultIndex; i < event.results.length; ++i) {
+			    	    self.speech += event.results[i][0].transcript
+			        }
+                    recognition.stop()
+			    }
+
+			    recognition.onend = function() {
+				    recognition.stop()
+                    self.micro = false
+                    self.autosubmit(self.speech)
+			    }
+            }
         }
     }
 }

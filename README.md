@@ -4,7 +4,7 @@
 
 # Dialogflow for Web
 
-This is an unofficial Web client for Dialogflow, it was built by me, to support different Google Assistant responses and to delivery the most out of the Platform. The executable is around 300KB
+This is an unofficial Web client for Dialogflow, i built it, to support Google Assistant rich-responses and to delivery the most out of the Platform. The executable is around 300KB
 
 ## What's included
 
@@ -30,11 +30,11 @@ This is an unofficial Web client for Dialogflow, it was built by me, to support 
 - Lists
 - Suggestions Chips
 - Link chips
+- WebSpeech API for voice input(BETA)
 
 ## What will be supported very soon
 - Carousel Card
 - Custom inputs and elements using custom payload
-- WebSpeech API for voice input
 - More animations and visual feedback
 - Widget mode, where you can add this app as an popup for your website
 
