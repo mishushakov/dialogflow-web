@@ -10874,7 +10874,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 
 
-const client = new __WEBPACK_IMPORTED_MODULE_0_api_ai_javascript__["a" /* ApiAiClient */]({ accessToken: '9d686a47b1de48bab431e94750d1cd87' });
+const client = new __WEBPACK_IMPORTED_MODULE_0_api_ai_javascript__["a" /* ApiAiClient */]({ accessToken: '9d686a47b1de48bab431e94750d1cd87' }); // <- replace it with yours
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     name: 'app',
@@ -10917,7 +10917,7 @@ const client = new __WEBPACK_IMPORTED_MODULE_0_api_ai_javascript__["a" /* ApiAiC
             let self = this; // <- correct scope
 
             if (mode == true) {
-                let recognition = new webkitSpeechRecognition();
+                let recognition = new webkitSpeechRecognition(); // <- chrome speech recognition
 
                 recognition.interimResults = true;
                 recognition.lang = 'en-US';

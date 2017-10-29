@@ -305,7 +305,7 @@ td
 
 <script>
 import { ApiAiClient } from 'api-ai-javascript'
-const client = new ApiAiClient({accessToken: '9d686a47b1de48bab431e94750d1cd87'})
+const client = new ApiAiClient({accessToken: '9d686a47b1de48bab431e94750d1cd87'}) // <- replace it with yours
 
 export default {
     name: 'app',
@@ -348,19 +348,19 @@ export default {
             let self = this // <- correct scope
 
             if(mode == true){
-                let recognition = new webkitSpeechRecognition()
+                let recognition = new webkitSpeechRecognition() // <- chrome speech recognition
 
                 recognition.interimResults = true
                 recognition.lang = 'en-US'
 			    recognition.start()
 
-                recognition.onresult = function(event) {
-			        for (var i = event.resultIndex; i < event.results.length; ++i) {
+                recognition.onresult = function(event){
+			        for (var i = event.resultIndex; i < event.results.length; ++i){
 			    	    self.speech = event.results[i][0].transcript
 			        }
 			    }
 
-			    recognition.onend = function() {
+			    recognition.onend = function(){
 				    recognition.stop()
                     self.micro = false
                     self.autosubmit(self.speech)
