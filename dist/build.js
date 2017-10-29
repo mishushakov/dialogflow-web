@@ -10863,8 +10863,10 @@ const client = new __WEBPACK_IMPORTED_MODULE_0_api_ai_javascript__["a" /* ApiAiC
         submit() {
             client.textRequest(this.query).then(response => {
                 if (this.query == 'clear') this.answers = [];
-
                 this.answers.push(response);
+
+                if (response.result.fulfillment.speech) responsiveVoice.speak(response.result.fulfillment.speech);
+
                 this.query = '';
                 this.speech = 'Go ahead, im listening...'; // <- reset query and speech
 

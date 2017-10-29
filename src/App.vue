@@ -294,8 +294,10 @@ export default {
         submit(){
             client.textRequest(this.query).then((response) => {
                 if (this.query == 'clear') this.answers = []
-
                 this.answers.push(response)
+                
+                if(response.result.fulfillment.speech) responsiveVoice.speak(response.result.fulfillment.speech)
+                
                 this.query = ''
                 this.speech = 'Go ahead, im listening...' // <- reset query and speech
 

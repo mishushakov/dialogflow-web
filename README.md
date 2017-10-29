@@ -32,6 +32,7 @@ This is an unofficial Web client for Dialogflow, i built it, to support Google A
 - Suggestions Chips
 - Link chips
 - WebSpeech API for voice input
+- Text-To-Speech output(BETA)
 
 ## What will be supported soon
 - Custom inputs and elements using custom payload
