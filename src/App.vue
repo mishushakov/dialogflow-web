@@ -7,7 +7,7 @@
             <i class="material-icons iicon" @click="microphone(true)">keyboard</i><input aria-label="Ask me something" autocomplete="off" v-model="query" class="queryform" @keyup.enter="submit()" placeholder="Ask me something..." autofocus type="text">        
         </div>
         <div class="wrapper" v-else>
-            <i class="material-icons iicon" @click="microphone(false)">mic</i><input class="queryform" :placeholder="speech" disabled>   
+            <i class="material-icons iicon" @click="microphone(false)">mic</i><input class="queryform" :placeholder="speech" readonly>   
         </div>
     </div>
 
@@ -28,7 +28,7 @@
             <tr>
                 <td>
 
-                    <!-- Bot speech output -->
+                    <!-- Bot message types / Speech -->
 
                     <div v-if="a.result.fulfillment.speech" class="bubble bot">
                         {{a.result.fulfillment.speech}}
@@ -49,14 +49,15 @@
                                 {{r.formattedText}}
                             </section>
                             <section class="mdc-card__actions" v-for="button in r.buttons">
-                                <a class="mdc-button mdc-button--compact mdc-card__action" target="_blank" :href="button.openUrlAction.url">{{button.title}} <i class="material-icons openlink">open_in_new</i></a>
+                                <a class="mdc-button mdc-button--compact mdc-button--primary mdc-card__action" target="_blank" :href="button.openUrlAction.url">{{button.title}} <i class="material-icons openlink">open_in_new</i></a>
                             </section>
                         </div>
 
                         <!-- Bot message types / Carousel Card -->
 
                         <div class="slider" v-if="r.type == 'carousel_card'">
-                            <carousel perPage=1 
+                            <carousel 
+                                    :perPage="1" 
                                     :navigationEnabled="true"
                                     :paginationEnabled="false"
                                     navigationNextLabel="<button class='mdc-fab material-icons rightnav'><span class='mdc-fab__icon'>keyboard_arrow_right</span></button>"
@@ -64,7 +65,7 @@
                                     :navigationClickTargetSize="0"
                                     :loop="true">
 
-                                <slide v-for="item in r.items">
+                                <slide v-for="item in r.items" :key="item.id">
                                     <div class="mdc-card slide">
                                         <img class="mdc-card__media-item" :src="item.image.url">
                                         <section class="mdc-card__primary">
@@ -126,6 +127,9 @@
 
 $color: #FF9800
 
+\:root
+  --mdc-theme-primary: $color
+
 body
     margin: 0
     background-color: #F5F5F5
@@ -158,13 +162,7 @@ body
     outline: none
     color: rgba(0,0,0,0.8)
     font-weight: 500
-    caret-color: red
-
-.fade-enter-active, .fade-leave-active
-  transition: opacity .5s
-
-.fade-enter, .fade-leave-to
-  opacity: 0
+    caret-color: $color
 
 .wrapper:hover > .iicon
     color: $color
@@ -207,6 +205,7 @@ td
 
 .slider
     max-width: 300px
+    margin-left: -5px
 
 .mdc-fab
     background-color: white
@@ -232,9 +231,6 @@ td
     height: auto
     width: 100%
     margin-top: -5px
-
-.mdc-card__action
-    color: $color
 
 .chips
     margin-left: -10px
@@ -316,6 +312,7 @@ export default {
 
             if(mode == true){
                 let recognition = new webkitSpeechRecognition()
+
                 recognition.lang = "en-US"
 			    recognition.start()
                 self.speech = ''

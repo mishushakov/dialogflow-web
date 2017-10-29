@@ -18,22 +18,22 @@ This is an unofficial Web client for Dialogflow, i built it, to support Google A
 - Contains Search Engine Optimisation
 - Based on VueJS with Webpack & Live Reload
 
-## Requirments
+## Requirements
 - NodeJS
 - NPM or Yarn
-- Basic knowledge in ES6 
+- Basic knowledge in ES6(JavaScript)
 - Dialogflow API Key ([You can get it here](https://dialogflow.com))
 
 ## What is supported
 - Basic reply
 - Cards
+- Carousel Cards
 - Lists
 - Suggestions Chips
 - Link chips
-- WebSpeech API for voice input(BETA)
-- Carousel Cards
+- WebSpeech API for voice input
 
-## What will be supported very soon
+## What will be supported soon
 - Custom inputs and elements using custom payload
 - More animations and visual feedback
 - Widget mode, where you can add this app as an popup for your website
@@ -69,7 +69,7 @@ Example using yarn
 
 `yarn dev`
 
-When you done these steps, your default browser should open and redirect you to `localhost:8080`. If the port 8080 is already in use, you can give an `port` argument to connect to it at specified port
+When you done these steps, your default browser should open and redirect you to `localhost:8080`. If the port 8080 is already in use, you can give an `port` argument to connect at specified port
 
 Example using npm
 
@@ -93,19 +93,18 @@ Example using yarn
 `yarn build`
 
 
-## Customizing App & Connecting your bot
+## Customizing App & Connecting your agent
 
-First of all change all `title` and `description` tags in `index.html`
+First of all change all `title` and `meta` tags in `index.html`
 
 Then go to `manifest.json` and edit it, add some icons, change the application name and colors.
 
 Open `src` directory
 
-This directory contains source code for the web-app. The App source code is in `App.vue` file. You should change my `accessToken` to yours, so you can connect and use your bot. Optionally you can also change the main color of app, by changing `$color` variable in sass style.
+This directory contains source code for the web-app. The App source code is in `App.vue` file. You should change my `accessToken` to yours, so you can connect and use your agent. Optionally you can also change the main color of app, by changing `$color` variable in sass style.
 
 To connect your bot, you first need to create one. You can do it by visiting [Dialogflow website](https://dialogflow.com). Then create your intents and add Google Assistant responses.
 
 Then grab your token and replace current one with yours. You can do it by opening `App.vue` and searching for `new ApiAiClient`.
-
 
 # Thank you, stay updated!

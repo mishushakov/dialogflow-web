@@ -33,9 +33,18 @@
         "sizes": "512x512"
       }
     ],
+    "permissions": {
+      "audio-capture" : {
+        "description" : "Audio capture"
+      },
+      "speech-recognition" : {
+        "description" : "Speech recognition"
+      }
+    },
+    "type": "privileged",
     "start_url": "index.html",
     "background_color": "#FFFFFF",
     "theme_color": "#FF9800",
     "display": "standalone",
     "orientation": "portrait"
-  }
+}

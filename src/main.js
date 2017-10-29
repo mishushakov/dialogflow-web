@@ -1,6 +1,6 @@
 import Vue from 'vue'
-import App from './App.vue'
 import VueCarousel from 'vue-carousel'
+import App from './App.vue'
 
 Vue.use(VueCarousel)
 
