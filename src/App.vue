@@ -185,7 +185,6 @@ body
 
 .iicon.t2s
     margin-left: 10px
-    margin-right: 20px
 
     @media screen and (max-width: 720px)
         right: 0
@@ -228,6 +227,8 @@ td
     color: $color
     
 .rightnav
+    margin-left: -32px
+
     @media screen and (max-width: 720px) 
             margin-left: -35px
 
@@ -235,6 +236,8 @@ td
             margin-left: -70px
 
 .leftnav
+    margin-right: -35px
+
     @media screen and (max-width: 720px)
         display: none
 
@@ -294,7 +297,6 @@ td
 
 <script>
 import { ApiAiClient } from 'api-ai-javascript'
-
 const client = new ApiAiClient({accessToken: '9d686a47b1de48bab431e94750d1cd87'})
 
 export default {
@@ -311,12 +313,13 @@ export default {
     methods: {
         submit(){
             client.textRequest(this.query).then((response) => {
-                if (this.query == 'clear') this.answers = []
                 this.answers.push(response)
                 
                 if(response.result.fulfillment.speech && this.muted == false){
                     let speech = new SpeechSynthesisUtterance(response.result.fulfillment.speech)
-                    window.speechSynthesis.speak(speech)
+                    speech.voiceURI = 'native'
+                    speech.lang = 'en-GB' // <- Nice british accent
+                    window.speechSynthesis.speak(speech) // <- Speech output
                 }
                 
                 this.query = ''
@@ -339,7 +342,7 @@ export default {
             if(mode == true){
                 let recognition = new webkitSpeechRecognition()
 
-                recognition.lang = "en-US"
+                recognition.lang = 'en-US'
 			    recognition.start()
                 self.speech = ''
                 

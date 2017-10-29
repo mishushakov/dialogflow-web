@@ -17,6 +17,8 @@ This is an unofficial Web client for Dialogflow, i built it, to support Google A
 - The App can be installed to homescreen
 - Contains Search Engine Optimisation
 - Based on VueJS with Webpack & Live Reload
+- WebSpeech API for voice input
+- Text-To-Speech output
 
 ## Requirements
 - NodeJS
@@ -31,8 +33,6 @@ This is an unofficial Web client for Dialogflow, i built it, to support Google A
 - Lists
 - Suggestions Chips
 - Link chips
-- WebSpeech API for voice input
-- Text-To-Speech output
 
 ## What will be supported soon
 - Custom inputs and elements using custom payload
