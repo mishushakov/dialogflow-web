@@ -354,15 +354,10 @@ export default {
                 recognition.lang = 'en-US'
 			    recognition.start()
 
-                recognition.onstart = function(){
-                    self.speech = ''
-                }
-
                 recognition.onresult = function(event) {
 			        for (var i = event.resultIndex; i < event.results.length; ++i) {
-			    	    self.speech += event.results[i][0].transcript
+			    	    self.speech = event.results[i][0].transcript
 			        }
-                    recognition.stop()
 			    }
 
 			    recognition.onend = function() {
