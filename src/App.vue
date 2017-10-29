@@ -4,13 +4,13 @@
     <!-- The input -->
     <div class="query">
         <div class="wrapper" v-if="micro == false">
-            <i class="material-icons iicon" @click="microphone(true)">keyboard</i>
+            <i class="material-icons iicon" @click="microphone(true)">mic</i>
             <input aria-label="Ask me something" autocomplete="off" v-model="query" class="queryform" @keyup.enter="submit()" placeholder="Ask me something..." autofocus type="text">
             <i class="material-icons iicon t2s" @click="mute(true)" v-if="muted == false">volume_up</i>
             <i class="material-icons iicon t2s" @click="mute(false)" v-else>volume_off</i>
         </div>
         <div class="wrapper" v-else>
-            <i class="material-icons iicon" @click="microphone(false)">mic</i><input class="queryform" :placeholder="speech" readonly>   
+            <i class="material-icons iicon recording" @click="microphone(false)">mic</i><input class="queryform" :placeholder="speech" readonly>   
         </div>
     </div>
 
@@ -37,12 +37,13 @@
                         {{a.result.fulfillment.speech}}
                     </div>
 
-                    <!-- Bot message types / Card -->
-
+                    <!-- Google Assistant output -->
                     <div v-for="r in a.result.fulfillment.messages">
 
+                        <!-- Bot message types / Card -->
+
                         <div class="mdc-card" v-if="r.type == 'basic_card'">
-                            <img class="mdc-card__media-item" :src="r.image.url">
+                            <img class="mdc-card__media-item" :src="r.image.url" v-if="r.image">
                             <section class="mdc-card__primary">
                                 <h1 class="mdc-card__title mdc-card__title">{{r.title}}</h1>
                                 <br>
@@ -70,7 +71,7 @@
 
                                 <slide v-for="item in r.items" :key="item.id">
                                     <div class="mdc-card slide">
-                                        <img class="mdc-card__media-item" :src="item.image.url">
+                                        <img class="mdc-card__media-item" :src="item.image.url" v-if="item.image">
                                         <section class="mdc-card__primary">
                                             <h1 class="mdc-card__title mdc-card__title mdc-theme--primary" @click="autosubmit(item.optionInfo.key)">{{item.title}}</h1>
                                         </section>
@@ -176,6 +177,9 @@ body
 .wrapper:hover > .iicon.t2s
     color: black
 
+.wrapper:hover > .iicon.recording
+    color: #F44336
+
 .iicon
     margin-left: 20px
     position: absolute
@@ -183,8 +187,12 @@ body
     color: rgba(0,0,0,0.8)
     cursor: pointer
 
+.recording
+    color: #F44336
+
 .iicon.t2s
     margin-left: 10px
+    margin-right: 20px
 
     @media screen and (max-width: 720px)
         right: 0
@@ -315,8 +323,8 @@ export default {
             client.textRequest(this.query).then((response) => {
                 this.answers.push(response)
                 
-                if(response.result.fulfillment.speech && this.muted == false){
-                    let speech = new SpeechSynthesisUtterance(response.result.fulfillment.speech)
+                if(response.result.fulfillment.speech || response.result.fulfillment.messages[0].type == 'simple_response' && this.muted == false){
+                    let speech = new SpeechSynthesisUtterance(response.result.fulfillment.speech || response.result.fulfillment.messages[0].textToSpeech)
                     speech.voiceURI = 'native'
                     speech.lang = 'en-GB' // <- Nice british accent
                     window.speechSynthesis.speak(speech) // <- Speech output
@@ -342,10 +350,14 @@ export default {
             if(mode == true){
                 let recognition = new webkitSpeechRecognition()
 
+                recognition.interimResults = true
                 recognition.lang = 'en-US'
 			    recognition.start()
-                self.speech = ''
-                
+
+                recognition.onstart = function(){
+                    self.speech = ''
+                }
+
                 recognition.onresult = function(event) {
 			        for (var i = event.resultIndex; i < event.results.length; ++i) {
 			    	    self.speech += event.results[i][0].transcript

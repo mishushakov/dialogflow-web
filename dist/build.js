@@ -10864,6 +10864,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 const client = new __WEBPACK_IMPORTED_MODULE_0_api_ai_javascript__["a" /* ApiAiClient */]({ accessToken: '9d686a47b1de48bab431e94750d1cd87' });
@@ -10884,8 +10892,8 @@ const client = new __WEBPACK_IMPORTED_MODULE_0_api_ai_javascript__["a" /* ApiAiC
             client.textRequest(this.query).then(response => {
                 this.answers.push(response);
 
-                if (response.result.fulfillment.speech && this.muted == false) {
-                    let speech = new SpeechSynthesisUtterance(response.result.fulfillment.speech);
+                if (response.result.fulfillment.speech || response.result.fulfillment.messages[0].type == 'simple_response' && this.muted == false) {
+                    let speech = new SpeechSynthesisUtterance(response.result.fulfillment.speech || response.result.fulfillment.messages[0].textToSpeech);
                     speech.voiceURI = 'native';
                     speech.lang = 'en-GB'; // <- Nice british accent
                     window.speechSynthesis.speak(speech); // <- Speech output
@@ -10911,9 +10919,13 @@ const client = new __WEBPACK_IMPORTED_MODULE_0_api_ai_javascript__["a" /* ApiAiC
             if (mode == true) {
                 let recognition = new webkitSpeechRecognition();
 
+                recognition.interimResults = true;
                 recognition.lang = 'en-US';
                 recognition.start();
-                self.speech = '';
+
+                recognition.onstart = function () {
+                    self.speech = '';
+                };
 
                 recognition.onresult = function (event) {
                     for (var i = event.resultIndex; i < event.results.length; ++i) {
@@ -10963,7 +10975,7 @@ exports = module.exports = __webpack_require__(15)();
 exports.push([module.i, "@import url(https://fonts.googleapis.com/css?family=Roboto);", ""]);
 
 // module
-exports.push([module.i, ":root{--mdc-theme-primary:#ff9800}body{margin:0;background-color:#f5f5f5;font-family:Roboto,sans-serif}.ai-window,.wrapper{max-width:500px;margin-left:auto;margin-right:auto}.ai-window{padding:1rem}.query{padding:16px 0;background-color:#fff;box-shadow:0 1px 3px rgba(0,0,0,.12),0 1px 2px rgba(0,0,0,.24);z-index:999;position:fixed;width:100%}.queryform{border:0;width:80%;margin-left:60px;font-size:16px;outline:none;color:rgba(0,0,0,.8);font-weight:500;caret-color:#ff9800}@media screen and (max-width:320px){.queryform{width:65%}}.wrapper:hover>.iicon{color:#ff9800}.wrapper:hover>.iicon.t2s{color:#000}.iicon{margin-left:20px;position:absolute;vertical-align:middle;color:rgba(0,0,0,.8);cursor:pointer}.iicon.t2s{margin-left:10px}@media screen and (max-width:720px){.iicon.t2s{right:0}}.chat-window{width:100%}.bubble{max-width:300px;background-color:#e1e1e1;padding:16px;border-radius:8px;color:rgba(0,0,0,.7);float:right}.bubble.bot{background-color:#fff;float:left;margin-right:10px}td{margin-top:30px;margin-bottom:10px}.mdc-card{background-color:#fff;max-width:300px;margin-bottom:5px}.slide{margin:5px}.slide,.slider{max-width:300px}.slider{margin-left:-5px}.mdc-fab{background-color:#fff;color:#ff9800}.rightnav{margin-left:-32px}@media screen and (max-width:720px){.rightnav{margin-left:-35px}}@media screen and (max-width:320px){.rightnav{margin-left:-70px}}.leftnav{margin-right:-35px}@media screen and (max-width:720px){.leftnav{display:none}}.openlink{vertical-align:middle;margin-top:-5px;margin-left:5px}.mdc-card__media-item{height:auto;width:100%;margin-top:-5px}.chips{margin-left:-10px}.suggestion{margin-top:10px;float:left;margin-left:10px;padding:10px;border:2px solid rgba(0,0,0,.4);color:rgba(0,0,0,.4);border-radius:6px;cursor:pointer}.suggestion:active{border:2px solid #000;color:#000}.suggestion.link{color:#fff;background-color:#ff9800;border:2px solid #ff9800}.suggestion.link:active{background-color:#cc7a00;border:2px solid #cc7a00}.mdc-list-item__start-detail{border-radius:50%}.copyright{font-weight:600;color:rgba(0,0,0,.8)}.copyright a{text-decoration:none;color:rgba(0,0,0,.8);border-bottom:2px solid transparent}.copyright a:hover{color:#ff9800;border-bottom:2px solid #ff9800}", ""]);
+exports.push([module.i, ":root{--mdc-theme-primary:#ff9800}body{margin:0;background-color:#f5f5f5;font-family:Roboto,sans-serif}.ai-window,.wrapper{max-width:500px;margin-left:auto;margin-right:auto}.ai-window{padding:1rem}.query{padding:16px 0;background-color:#fff;box-shadow:0 1px 3px rgba(0,0,0,.12),0 1px 2px rgba(0,0,0,.24);z-index:999;position:fixed;width:100%}.queryform{border:0;width:80%;margin-left:60px;font-size:16px;outline:none;color:rgba(0,0,0,.8);font-weight:500;caret-color:#ff9800}@media screen and (max-width:320px){.queryform{width:65%}}.wrapper:hover>.iicon{color:#ff9800}.wrapper:hover>.iicon.t2s{color:#000}.wrapper:hover>.iicon.recording{color:#f44336}.iicon{margin-left:20px;position:absolute;vertical-align:middle;color:rgba(0,0,0,.8);cursor:pointer}.recording{color:#f44336}.iicon.t2s{margin-left:10px;margin-right:20px}@media screen and (max-width:720px){.iicon.t2s{right:0}}.chat-window{width:100%}.bubble{max-width:300px;background-color:#e1e1e1;padding:16px;border-radius:8px;color:rgba(0,0,0,.7);float:right}.bubble.bot{background-color:#fff;float:left;margin-right:10px}td{margin-top:30px;margin-bottom:10px}.mdc-card{background-color:#fff;max-width:300px;margin-bottom:5px}.slide{margin:5px}.slide,.slider{max-width:300px}.slider{margin-left:-5px}.mdc-fab{background-color:#fff;color:#ff9800}.rightnav{margin-left:-32px}@media screen and (max-width:720px){.rightnav{margin-left:-35px}}@media screen and (max-width:320px){.rightnav{margin-left:-70px}}.leftnav{margin-right:-35px}@media screen and (max-width:720px){.leftnav{display:none}}.openlink{vertical-align:middle;margin-top:-5px;margin-left:5px}.mdc-card__media-item{height:auto;width:100%;margin-top:-5px}.chips{margin-left:-10px}.suggestion{margin-top:10px;float:left;margin-left:10px;padding:10px;border:2px solid rgba(0,0,0,.4);color:rgba(0,0,0,.4);border-radius:6px;cursor:pointer}.suggestion:active{border:2px solid #000;color:#000}.suggestion.link{color:#fff;background-color:#ff9800;border:2px solid #ff9800}.suggestion.link:active{background-color:#cc7a00;border:2px solid #cc7a00}.mdc-list-item__start-detail{border-radius:50%}.copyright{font-weight:600;color:rgba(0,0,0,.8)}.copyright a{text-decoration:none;color:rgba(0,0,0,.8);border-bottom:2px solid transparent}.copyright a:hover{color:#ff9800;border-bottom:2px solid #ff9800}", ""]);
 
 // exports
 
@@ -11101,7 +11113,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         _vm.microphone(true)
       }
     }
-  }, [_vm._v("keyboard")]), _vm._v(" "), _c('input', {
+  }, [_vm._v("mic")]), _vm._v(" "), _c('input', {
     directives: [{
       name: "model",
       rawName: "v-model",
@@ -11146,7 +11158,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_vm._v("volume_off")])]) : _c('div', {
     staticClass: "wrapper"
   }, [_c('i', {
-    staticClass: "material-icons iicon",
+    staticClass: "material-icons iicon recording",
     on: {
       "click": function($event) {
         _vm.microphone(false)
@@ -11170,12 +11182,12 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }, [_vm._v("\n                        " + _vm._s(a.result.fulfillment.speech) + "\n                    ")]) : _vm._e(), _vm._v(" "), _vm._l((a.result.fulfillment.messages), function(r) {
       return _c('div', [(r.type == 'basic_card') ? _c('div', {
         staticClass: "mdc-card"
-      }, [_c('img', {
+      }, [(r.image) ? _c('img', {
         staticClass: "mdc-card__media-item",
         attrs: {
           "src": r.image.url
         }
-      }), _vm._v(" "), _c('section', {
+      }) : _vm._e(), _vm._v(" "), _c('section', {
         staticClass: "mdc-card__primary"
       }, [_c('h1', {
         staticClass: "mdc-card__title mdc-card__title"
@@ -11212,12 +11224,12 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
           key: item.id
         }, [_c('div', {
           staticClass: "mdc-card slide"
-        }, [_c('img', {
+        }, [(item.image) ? _c('img', {
           staticClass: "mdc-card__media-item",
           attrs: {
             "src": item.image.url
           }
-        }), _vm._v(" "), _c('section', {
+        }) : _vm._e(), _vm._v(" "), _c('section', {
           staticClass: "mdc-card__primary"
         }, [_c('h1', {
           staticClass: "mdc-card__title mdc-card__title mdc-theme--primary",

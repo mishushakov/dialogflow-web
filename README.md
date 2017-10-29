@@ -27,7 +27,8 @@ This is an unofficial Web client for Dialogflow, i built it, to support Google A
 - Dialogflow API Key ([You can get it here](https://dialogflow.com))
 
 ## What is supported
-- Basic reply
+- Basic reply (is being displayed and spoken)
+- Simple Response (is being spoken)
 - Cards
 - Carousel Cards
 - Lists
