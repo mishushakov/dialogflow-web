@@ -4,7 +4,10 @@
     <!-- The input -->
     <div class="query">
         <div class="wrapper" v-if="micro == false">
-            <i class="material-icons iicon" @click="microphone(true)">keyboard</i><input aria-label="Ask me something" autocomplete="off" v-model="query" class="queryform" @keyup.enter="submit()" placeholder="Ask me something..." autofocus type="text">        
+            <i class="material-icons iicon" @click="microphone(true)">keyboard</i>
+            <input aria-label="Ask me something" autocomplete="off" v-model="query" class="queryform" @keyup.enter="submit()" placeholder="Ask me something..." autofocus type="text">
+            <i class="material-icons iicon t2s" @click="mute(true)" v-if="muted == false">volume_up</i>
+            <i class="material-icons iicon t2s" @click="mute(false)" v-else>volume_off</i>
         </div>
         <div class="wrapper" v-else>
             <i class="material-icons iicon" @click="microphone(false)">mic</i><input class="queryform" :placeholder="speech" readonly>   
@@ -69,7 +72,7 @@
                                     <div class="mdc-card slide">
                                         <img class="mdc-card__media-item" :src="item.image.url">
                                         <section class="mdc-card__primary">
-                                            <h1 class="mdc-card__title mdc-card__title">{{item.title}}</h1>
+                                            <h1 class="mdc-card__title mdc-card__title mdc-theme--primary" @click="autosubmit(item.optionInfo.key)">{{item.title}}</h1>
                                         </section>
                                         <section class="mdc-card__supporting-text">
                                             {{item.description}}
@@ -164,8 +167,14 @@ body
     font-weight: 500
     caret-color: $color
 
+    @media screen and (max-width: 320px)
+        width: 100% - 35%
+
 .wrapper:hover > .iicon
     color: $color
+
+.wrapper:hover > .iicon.t2s
+    color: black
 
 .iicon
     margin-left: 20px
@@ -173,6 +182,13 @@ body
     vertical-align: middle
     color: rgba(0,0,0,0.8)
     cursor: pointer
+
+.iicon.t2s
+    margin-left: 10px
+    margin-right: 20px
+
+    @media screen and (max-width: 720px)
+        right: 0
 
 .chat-window
     width: 100%
@@ -216,7 +232,7 @@ td
             margin-left: -35px
 
     @media screen and (max-width: 320px) 
-            margin-left: -65px
+            margin-left: -70px
 
 .leftnav
     @media screen and (max-width: 720px)
@@ -277,7 +293,8 @@ td
 </style>
 
 <script>
-import { ApiAiClient } from "api-ai-javascript"
+import { ApiAiClient } from 'api-ai-javascript'
+
 const client = new ApiAiClient({accessToken: '9d686a47b1de48bab431e94750d1cd87'})
 
 export default {
@@ -287,7 +304,8 @@ export default {
             answers: [],
             query: '',
             speech: 'Go ahead, im listening...',
-            micro: false
+            micro: false,
+            muted: false
         }
     },
     methods: {
@@ -296,7 +314,10 @@ export default {
                 if (this.query == 'clear') this.answers = []
                 this.answers.push(response)
                 
-                if(response.result.fulfillment.speech) responsiveVoice.speak(response.result.fulfillment.speech)
+                if(response.result.fulfillment.speech && this.muted == false){
+                    let speech = new SpeechSynthesisUtterance(response.result.fulfillment.speech)
+                    window.speechSynthesis.speak(speech)
+                }
                 
                 this.query = ''
                 this.speech = 'Go ahead, im listening...' // <- reset query and speech
@@ -307,6 +328,9 @@ export default {
         autosubmit(suggestion){
             this.query = suggestion
             this.submit()
+        },
+        mute(mode){
+            this.muted = mode
         },
         microphone(mode){
             this.micro = mode
