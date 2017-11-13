@@ -1,7 +1,7 @@
 {
   "name": "dialogflow-web",
   "description": "Dialogflow Progressive Web Application",
-  "version": "1.6.0",
+  "version": "1.6.5",
   "author": "Ushakov",
   "scripts": {
     "dev": "cross-env NODE_ENV=development webpack-dev-server --open --hot",
@@ -14,16 +14,17 @@
   },
   "devDependencies": {
     "babel-core": "^6.0.0",
-    "babel-loader": "^6.0.0",
+    "babel-loader": "^7.1.2",
     "babel-preset-latest": "^6.0.0",
-    "cross-env": "^3.0.0",
-    "css-loader": "^0.25.0",
-    "file-loader": "^0.9.0",
+    "cross-env": "^5.1.1",
+    "css-loader": "^0.28.7",
+    "file-loader": "^1.1.5",
     "node-sass": "^4.5.0",
-    "sass-loader": "^5.0.1",
-    "vue-loader": "^11.1.4",
+    "sass-loader": "^6.0.6",
+    "uglifyjs-webpack-plugin": "^1.0.1",
+    "vue-loader": "^13.5.0",
     "vue-template-compiler": "^2.2.1",
-    "webpack": "^2.2.0",
+    "webpack": "^3.8.1",
     "webpack-dev-server": "^2.2.0"
   }
 }

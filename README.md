@@ -23,7 +23,7 @@ This is an unofficial Web client for Dialogflow, i built it, to support Google A
 ## Requirements
 - NodeJS
 - NPM or Yarn
-- Basic knowledge in ES6(JavaScript)
+- Basic knowledge in ES6 (JavaScript)
 - Dialogflow API Key ([You can get it here](https://dialogflow.com))
 
 ## What is supported
@@ -34,11 +34,12 @@ This is an unofficial Web client for Dialogflow, i built it, to support Google A
 - Lists
 - Suggestions Chips
 - Link chips
+- Combination of all above
 
 ## What will be supported soon
 - Custom inputs and elements using custom payload
 - More animations and visual feedback
-- Widget mode, where you can add this app as an popup for your website
+- Widget mode, where you can add this app as an popup for your website (**WIP**)
 
 # Get started
 

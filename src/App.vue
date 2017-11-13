@@ -14,10 +14,32 @@
         </div>
     </div>
 
-    <main class="ai-window">
+    <main class="wrapper ai-window">
 
         <br>
         <br>
+
+        <div v-if="answers.length == 0 && online == true">
+            <h1 class="title mdc-typography--headline">
+                <div class="material-icons up">arrow_upward</div>
+                <br>
+                <br>
+                    Hello, ask something to get started
+
+                    <p class="mdc-typography--body2">You can type "Hello" for example. Or just press on the microphone to talk</p>
+            </h1>
+        </div>
+
+        <div v-if="answers.length == 0 && online == false">
+            <h1 class="title mdc-typography--headline">
+                <div class="material-icons up">cloud_off</div>
+                <br>
+                <br>
+                    Oh, no!
+
+                    <p class="mdc-typography--body2">It looks like you are not connected to the internet, this webpage <b>requires</b> internet connection, to process your requests</p>
+            </h1>
+        </div>
 
         <!-- Chat window -->
         <table v-for="a in answers" class="chat-window">
@@ -43,7 +65,7 @@
                         <!-- Bot message types / Card -->
 
                         <div class="mdc-card" v-if="r.type == 'basic_card'">
-                            <img class="mdc-card__media-item" :src="r.image.url" v-if="r.image">
+                            <img :title="r.title" :alt="r.title" class="mdc-card__media-item" :src="r.image.url" v-if="r.image">
                             <section class="mdc-card__primary">
                                 <h1 class="mdc-card__title mdc-card__title">{{r.title}}</h1>
                                 <br>
@@ -89,7 +111,7 @@
                             <h3 class="mdc-list-group__subheader">{{r.title}}</h3>
                             <ul class="mdc-list mdc-list--two-line mdc-list--avatar-list" v-for="item in r.items" @click="autosubmit(item.optionInfo.key)">
                                 <li class="mdc-list-item">
-                                    <img class="mdc-list-item__start-detail" width="56" height="56" :src="item.image.url" v-if="item.image"/>
+                                    <img :title="item.title" :alt="item.title" class="mdc-list-item__start-detail" width="56" height="56" :src="item.image.url" v-if="item.image"/>
                                     <span class="mdc-list-item__text">
                                         {{item.title}}
                                     <span class="mdc-list-item__text__secondary">{{item.description}}</span>
@@ -120,7 +142,7 @@
         </table>
 
         <br>
-        <p class="copyright" id="bottom">Proudly powered by <a href="https://mish.io/Ushakov">Ushakov</a> & <a href="https://dialogflow.com">Dialogflow</a></p>
+        <p class="copyright" v-if="answers.length > 0" id="bottom">Proudly powered by <a href="https://mish.io/Ushakov">Ushakov</a> & <a href="https://dialogflow.com">Dialogflow</a></p>
 
     </main>
 </section>
@@ -144,11 +166,21 @@ body
     margin-left: auto
     margin-right: auto
 
-.ai-window
-    max-width: 500px
-    margin-left: auto
-    margin-right: auto
+.wrapper.ai-window
     padding: 1rem
+
+.up
+    font-size: 32px
+    background-color: white
+    padding: 10px
+    border-radius: 50%
+
+.title
+    vertical-align: middle
+    text-align: center
+    font-weight: 700
+    color: rgba(0,0,0,0.7)
+    margin-top: 30%
 
 .query
     padding: 16px 0px
@@ -166,19 +198,9 @@ body
     outline: none
     color: rgba(0,0,0,0.8)
     font-weight: 500
-    caret-color: $color
 
     @media screen and (max-width: 320px)
         width: 100% - 35%
-
-.wrapper:hover > .iicon
-    color: $color
-
-.wrapper:hover > .iicon.t2s
-    color: black
-
-.wrapper:hover > .iicon.recording
-    color: #F44336
 
 .iicon
     margin-left: 20px
@@ -267,8 +289,8 @@ td
     float: left
     margin-left: 10px
     padding: 10px
-    border: 2px rgba(0,0,0,0.4) solid
-    color: rgba(0,0,0,0.4)
+    border: 2px rgba(0,0,0,0.5) solid
+    color: rgba(0,0,0,0.5)
     border-radius: 6px
     cursor: pointer
 
@@ -315,26 +337,29 @@ export default {
             query: '',
             speech: 'Go ahead, im listening...',
             micro: false,
-            muted: false
+            muted: false,
+            online: navigator.onLine
         }
     },
     methods: {
         submit(){
             client.textRequest(this.query).then((response) => {
                 this.answers.push(response)
-                
-                if(response.result.fulfillment.speech || response.result.fulfillment.messages[0].type == 'simple_response' && this.muted == false){
-                    let speech = new SpeechSynthesisUtterance(response.result.fulfillment.speech || response.result.fulfillment.messages[0].textToSpeech)
-                    speech.voiceURI = 'native'
-                    speech.lang = 'en-GB' // <- Nice british accent
-                    window.speechSynthesis.speak(speech) // <- Speech output
-                }
-                
+                this.handle(response) // <- handle the response in handle() method
+
                 this.query = ''
                 this.speech = 'Go ahead, im listening...' // <- reset query and speech
 
                 //window.scrollTo(0, document.body.scrollHeight) <- Uncomment this if you want autoscroll
             })
+        },
+        handle(response){
+            if(response.result.fulfillment.speech || response.result.fulfillment.messages[0].type == 'simple_response' && this.muted == false){
+                    let speech = new SpeechSynthesisUtterance(response.result.fulfillment.speech || response.result.fulfillment.messages[0].textToSpeech)
+                    speech.voiceURI = 'native'
+                    speech.lang = 'en-GB' // <- Nice british accent
+                    window.speechSynthesis.speak(speech) // <- Speech output
+                }
         },
         autosubmit(suggestion){
             this.query = suggestion

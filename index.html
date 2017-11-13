@@ -4,6 +4,7 @@
         <meta charset="utf-8">
         <title>Dialogflow for Web</title>
         <meta name="description" content="Dialogflow unofficial Progressive Web App">
+        <link rel="canonical" href="https://mish.io/dialogflow-web" />
 
         <!-- Mobile Stuff -->
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -58,8 +59,8 @@
             "description": "Dialogflow unofficial Progressive Web App",
             "potentialAction": {
                 "@type": "SearchAction",
-                "target": "https://example.com?q={search}",
-                "query-input": "required name=search"
+                "target": "https://example.com?q={search_term_string}",
+                "query-input": "required name=search_term_string"
             }
         }
         </script>
@@ -75,7 +76,7 @@
         <script>
             if ('serviceWorker' in navigator) {
                 window.addEventListener('load', function() {
-                navigator.serviceWorker.register('/worker.js')
+                    navigator.serviceWorker.register('/worker.js')
                 })
             }
         </script>
