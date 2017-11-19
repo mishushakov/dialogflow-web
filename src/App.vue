@@ -19,6 +19,7 @@
         <br>
         <br>
 
+        <!-- Display Welcome Message -->
         <div v-if="answers.length == 0 && online == true">
             <h1 class="title mdc-typography--headline">
                 <div class="material-icons up">arrow_upward</div>
@@ -30,6 +31,7 @@
             </h1>
         </div>
 
+        <!-- Display offline message -->
         <div v-if="answers.length == 0 && online == false">
             <h1 class="title mdc-typography--headline">
                 <div class="material-icons up">cloud_off</div>
@@ -65,7 +67,7 @@
                         <!-- Bot message types / Card -->
 
                         <div class="mdc-card" v-if="r.type == 'basic_card'">
-                            <img :title="r.title" :alt="r.title" class="mdc-card__media-item" :src="r.image.url" v-if="r.image">
+                            <img :title="r.image.accessibilityText" :alt="r.image.accessibilityText" class="mdc-card__media-item" :src="r.image.url" v-if="r.image">
                             <section class="mdc-card__primary">
                                 <h1 class="mdc-card__title mdc-card__title">{{r.title}}</h1>
                                 <br>
@@ -111,7 +113,7 @@
                             <h3 class="mdc-list-group__subheader">{{r.title}}</h3>
                             <ul class="mdc-list mdc-list--two-line mdc-list--avatar-list" v-for="item in r.items" @click="autosubmit(item.optionInfo.key)">
                                 <li class="mdc-list-item">
-                                    <img :title="item.title" :alt="item.title" class="mdc-list-item__start-detail" width="56" height="56" :src="item.image.url" v-if="item.image"/>
+                                    <img :title="item.image.accessibilityText" :alt="item.image.accessibilityText" class="mdc-list-item__start-detail" width="56" height="56" :src="item.image.url" v-if="item.image"/>
                                     <span class="mdc-list-item__text">
                                         {{item.title}}
                                     <span class="mdc-list-item__text__secondary">{{item.description}}</span>
