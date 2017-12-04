@@ -144,7 +144,7 @@
         </table>
 
         <br>
-        <p class="copyright" v-if="answers.length > 0" id="bottom">Proudly powered by <a href="https://mish.io/Ushakov">Ushakov</a> & <a href="https://dialogflow.com">Dialogflow</a></p>
+        <p class="copyright" v-if="answers.length > 0" id="bottom">Proudly powered by <a href="https://mish.io">Ushakov</a> & <a href="https://dialogflow.com">Dialogflow</a></p>
 
     </main>
 </section>
@@ -357,11 +357,11 @@ export default {
         },
         handle(response){
             if(response.result.fulfillment.speech || response.result.fulfillment.messages[0].type == 'simple_response' && this.muted == false){
-                    let speech = new SpeechSynthesisUtterance(response.result.fulfillment.speech || response.result.fulfillment.messages[0].textToSpeech)
-                    speech.voiceURI = 'native'
-                    speech.lang = 'en-GB' // <- Nice british accent
-                    window.speechSynthesis.speak(speech) // <- Speech output
-                }
+                let speech = new SpeechSynthesisUtterance(response.result.fulfillment.speech || response.result.fulfillment.messages[0].textToSpeech)
+                speech.voiceURI = 'native'
+                speech.lang = 'en-GB' // <- Nice british accent
+                window.speechSynthesis.speak(speech) // <- Speech output
+            }
         },
         autosubmit(suggestion){
             this.query = suggestion
