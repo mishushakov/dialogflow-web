@@ -231,6 +231,7 @@ body
     border-radius: 8px
     color: rgba(0,0,0,0.7)
     float: right
+    animation: msg .25s linear
 
 .bubble.bot
     background-color: white
@@ -245,6 +246,7 @@ td
     background-color: white
     max-width: 300px
     margin-bottom: 5px
+    animation: msg .45s ease-in-out
 
 .slide
     margin: 5px
@@ -295,6 +297,7 @@ td
     color: rgba(0,0,0,0.5)
     border-radius: 6px
     cursor: pointer
+    animation: controls .25s linear
 
 .suggestion:active
     border: 2px rgba(0,0,0,1) solid
@@ -311,6 +314,20 @@ td
 
 .mdc-list-item__start-detail
     border-radius: 50%
+
+@keyframes msg
+    0%
+        opacity: 0
+        transform: scale(0.8)
+    100%
+        opacity: 1
+        transform: scale(1)
+
+@keyframes controls
+    0%
+        transform: scaleY(0)
+    100%
+        transform: scaleY(1)
 
 .copyright
     font-weight: 600
@@ -343,6 +360,15 @@ export default {
             online: navigator.onLine
         }
     },
+    watch: {
+        answers: function(val){
+            setTimeout(() => { 
+                document.querySelector('.copyright').scrollIntoView({ 
+                    behavior: 'smooth' 
+                })
+            }, 2) // if new answers arrive, wait for render and then smoothly scroll down to .copyright selector, used as anchor
+        }
+    },
     methods: {
         submit(){
             client.textRequest(this.query).then((response) => {
@@ -351,16 +377,15 @@ export default {
 
                 this.query = ''
                 this.speech = 'Go ahead, im listening...' // <- reset query and speech
-
-                //window.scrollTo(0, document.body.scrollHeight) <- Uncomment this if you want autoscroll
             })
         },
         handle(response){
-            if(response.result.fulfillment.speech || response.result.fulfillment.messages[0].type == 'simple_response' && this.muted == false){
+            if(response.result.fulfillment.speech || response.result.fulfillment.messages[0].type == 'simple_response'){
                 let speech = new SpeechSynthesisUtterance(response.result.fulfillment.speech || response.result.fulfillment.messages[0].textToSpeech)
                 speech.voiceURI = 'native'
                 speech.lang = 'en-GB' // <- Nice british accent
-                window.speechSynthesis.speak(speech) // <- Speech output
+
+                if(this.muted == false) window.speechSynthesis.speak(speech) // <- Speech output if microphone is allowed
             }
         },
         autosubmit(suggestion){

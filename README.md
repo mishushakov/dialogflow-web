@@ -36,12 +36,11 @@ This is an unofficial Web client for Dialogflow, i built it, to support Google A
 - Suggestions Chips
 - Link chips
 - Combination of all above
+- Fancy animations and visual feedback
+- Widget mode, for more info see https://github.com/MishUshakov/dialogflow-widget
 
 ## What will be supported soon
 - Custom inputs and elements using custom payload
-- More animations and visual feedback
-- Widget mode, for more info see https://github.com/MishUshakov/dialogflow-widget
-
 - Support for Dialogflow API v2 & Enterprise Edition (Will be in a separate branch)
 
 # Get started
