@@ -346,7 +346,9 @@ td
 
 <script>
 import { ApiAiClient } from 'api-ai-javascript'
-const client = new ApiAiClient({accessToken: '9d686a47b1de48bab431e94750d1cd87'}) // <- replace it with yours
+import Config from '../config'
+
+const client = new ApiAiClient({accessToken: Config.dialogflow.accessToken})
 
 export default {
     name: 'app',
@@ -383,7 +385,7 @@ export default {
             if(response.result.fulfillment.speech || response.result.fulfillment.messages[0].type == 'simple_response'){
                 let speech = new SpeechSynthesisUtterance(response.result.fulfillment.speech || response.result.fulfillment.messages[0].textToSpeech)
                 speech.voiceURI = 'native'
-                speech.lang = 'en-GB' // <- Nice british accent
+                speech.lang = Config.lang.speech
 
                 if(this.muted == false) window.speechSynthesis.speak(speech) // <- Speech output if microphone is allowed
             }
@@ -403,7 +405,7 @@ export default {
                 let recognition = new webkitSpeechRecognition() // <- chrome speech recognition
 
                 recognition.interimResults = true
-                recognition.lang = 'en-US'
+                recognition.lang = Config.lang.recognition
 			    recognition.start()
 
                 recognition.onresult = function(event){
