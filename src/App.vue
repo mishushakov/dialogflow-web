@@ -25,7 +25,7 @@
                 <div class="material-icons up">arrow_upward</div>
                 <br>
                 <br>
-                    Hello, ask something to get started
+                    {{ $t("message.welcome") }}
 
                     <p class="mdc-typography--body2">You can type "Hello" for example. Or just press on the microphone to talk</p>
             </h1>
