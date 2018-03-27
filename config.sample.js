@@ -6,5 +6,8 @@ export default {
         display: 'en',
         recognition: 'en-US',
         speech: 'en-GB' // Nice british accent
+    },
+    features: {
+        about: true
     }
 }

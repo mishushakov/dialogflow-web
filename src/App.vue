@@ -42,7 +42,7 @@
         </div>
 
         <!-- Chat window -->
-        <table v-for="a in answers" :key="a" class="chat-window">
+        <table v-for="a in answers" :key="a.id" class="chat-window">
 
             <!-- Your messages -->
             <tr>
@@ -60,7 +60,7 @@
                     </div>
 
                     <!-- Google Assistant output -->
-                    <div v-for="r in a.result.fulfillment.messages" :key="r">
+                    <div v-for="r in a.result.fulfillment.messages" :key="r.speech">
 
                         <!-- Bot message types / Card -->
 
@@ -377,6 +377,7 @@ export default {
   methods: {
     submit() {
       client.textRequest(this.query).then(response => {
+        console.log('response', response)
         this.answers.push(response)
         this.handle(response) // <- handle the response in handle() method
 
