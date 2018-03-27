@@ -368,16 +368,16 @@ export default {
   watch: {
     answers: function(val) {
       setTimeout(() => {
-        document.querySelector('.copyright').scrollIntoView({
-          behavior: 'smooth'
-        })
+        document
+          .querySelector('.copyright')
+          .scrollIntoView({ behavior: 'smooth' })
       }, 2) // if new answers arrive, wait for render and then smoothly scroll down to .copyright selector, used as anchor
     }
   },
   methods: {
     submit() {
       client.textRequest(this.query).then(response => {
-        console.log('response', response)
+        // console.log('response', response)
         this.answers.push(response)
         this.handle(response) // <- handle the response in handle() method
 
