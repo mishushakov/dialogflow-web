@@ -5,7 +5,7 @@
     <div class="query">
         <div class="wrapper" v-if="micro == false">
             <i class="material-icons iicon" @click="microphone(true)">mic</i>
-            <input aria-label="Ask me something" autocomplete="off" v-model="query" class="queryform" @keyup.enter="submit()" placeholder="Ask me something..." autofocus type="text">
+            <input :aria-label="$t('generic.inputPlaceholder')" autocomplete="off" v-model="query" class="queryform" @keyup.enter="submit()" :placeholder="$t('generic.inputPlaceholder')" autofocus type="text">
             <i class="material-icons iicon t2s" @click="mute(true)" v-if="muted == false">volume_up</i>
             <i class="material-icons iicon t2s" @click="mute(false)" v-else>volume_off</i>
         </div>
@@ -25,9 +25,8 @@
                 <div class="material-icons up">arrow_upward</div>
                 <br>
                 <br>
-                    Hello, ask something to get started
-
-                    <p class="mdc-typography--body2">You can type "Hello" for example. Or just press on the microphone to talk</p>
+                    {{ $t("welcome.title") }}
+                    <p class="mdc-typography--body2">{{ $t("welcome.subtitle") }}</p>
             </h1>
         </div>
 
@@ -37,14 +36,13 @@
                 <div class="material-icons up">cloud_off</div>
                 <br>
                 <br>
-                    Oh, no!
-
-                    <p class="mdc-typography--body2">It looks like you are not connected to the internet, this webpage <b>requires</b> internet connection, to process your requests</p>
+                    {{ $t("offline.title") }}
+                    <p class="mdc-typography--body2">{{ $t("offline.subtitle") }}</p>
             </h1>
         </div>
 
         <!-- Chat window -->
-        <table v-for="a in answers" class="chat-window">
+        <table v-for="a in answers" :key="a.id" class="chat-window">
 
             <!-- Your messages -->
             <tr>
@@ -62,7 +60,7 @@
                     </div>
 
                     <!-- Google Assistant output -->
-                    <div v-for="r in a.result.fulfillment.messages">
+                    <div v-for="r in a.result.fulfillment.messages" :key="r.speech">
 
                         <!-- Bot message types / Card -->
 
@@ -76,7 +74,7 @@
                             <section class="mdc-card__supporting-text">
                                 {{r.formattedText}}
                             </section>
-                            <section class="mdc-card__actions" v-for="button in r.buttons">
+                            <section class="mdc-card__actions" v-for="button in r.buttons" :key="button">
                                 <a class="mdc-button mdc-button--compact mdc-button--primary mdc-card__action" target="_blank" :href="button.openUrlAction.url">{{button.title}} <i class="material-icons openlink">open_in_new</i></a>
                             </section>
                         </div>
@@ -111,7 +109,7 @@
 
                         <div class="mdc-list-group mdc-card" v-if="r.type == 'list_card'">
                             <h3 class="mdc-list-group__subheader">{{r.title}}</h3>
-                            <ul class="mdc-list mdc-list--two-line mdc-list--avatar-list" v-for="item in r.items" @click="autosubmit(item.optionInfo.key)">
+                            <ul class="mdc-list mdc-list--two-line mdc-list--avatar-list" v-for="item in r.items" :key="item" @click="autosubmit(item.optionInfo.key)">
                                 <li class="mdc-list-item">
                                     <img :title="item.image.accessibilityText" :alt="item.image.accessibilityText" class="mdc-list-item__start-detail" width="56" height="56" :src="item.image.url" v-if="item.image"/>
                                     <span class="mdc-list-item__text">
@@ -133,7 +131,7 @@
                         <!-- Bot message types / Suggestion Chip -->
 
                         <div v-if="r.type == 'suggestion_chips'" class="chips">
-                            <div class="suggestion" @click="autosubmit(s.title)" v-for="s in r.suggestions">
+                            <div class="suggestion" @click="autosubmit(s.title)" v-for="s in r.suggestions" :key="s">
                                 {{s.title}}
                             </div>
                         </div>
@@ -144,7 +142,11 @@
         </table>
 
         <br>
-        <p class="copyright" v-if="answers.length > 0" id="bottom">Proudly powered by <a href="https://mish.io">Ushakov</a> & <a href="https://dialogflow.com">Dialogflow</a></p>
+        <p class="copyright" v-if="answers.length > 0" id="bottom">
+            <span v-if="Config.features.about">
+                {{ $t("about.developedBy") }} <a href="https://mish.io">Ushakov</a> & <a href="https://dialogflow.com">Dialogflow</a>
+            </span>
+        </p>
 
     </main>
 </section>
@@ -346,79 +348,89 @@ td
 
 <script>
 import { ApiAiClient } from 'api-ai-javascript'
-const client = new ApiAiClient({accessToken: '9d686a47b1de48bab431e94750d1cd87'}) // <- replace it with yours
+import Config from '../config'
+
+const client = new ApiAiClient({ accessToken: Config.dialogflow.accessToken })
 
 export default {
-    name: 'app',
-    data: function(){
-        return {
-            answers: [],
-            query: '',
-            speech: 'Go ahead, im listening...',
-            micro: false,
-            muted: false,
-            online: navigator.onLine
-        }
-    },
-    watch: {
-        answers: function(val){
-            setTimeout(() => { 
-                document.querySelector('.copyright').scrollIntoView({ 
-                    behavior: 'smooth' 
-                })
-            }, 2) // if new answers arrive, wait for render and then smoothly scroll down to .copyright selector, used as anchor
-        }
-    },
-    methods: {
-        submit(){
-            client.textRequest(this.query).then((response) => {
-                this.answers.push(response)
-                this.handle(response) // <- handle the response in handle() method
-
-                this.query = ''
-                this.speech = 'Go ahead, im listening...' // <- reset query and speech
-            })
-        },
-        handle(response){
-            if(response.result.fulfillment.speech || response.result.fulfillment.messages[0].type == 'simple_response'){
-                let speech = new SpeechSynthesisUtterance(response.result.fulfillment.speech || response.result.fulfillment.messages[0].textToSpeech)
-                speech.voiceURI = 'native'
-                speech.lang = 'en-GB' // <- Nice british accent
-
-                if(this.muted == false) window.speechSynthesis.speak(speech) // <- Speech output if microphone is allowed
-            }
-        },
-        autosubmit(suggestion){
-            this.query = suggestion
-            this.submit()
-        },
-        mute(mode){
-            this.muted = mode
-        },
-        microphone(mode){
-            this.micro = mode
-            let self = this // <- correct scope
-
-            if(mode == true){
-                let recognition = new webkitSpeechRecognition() // <- chrome speech recognition
-
-                recognition.interimResults = true
-                recognition.lang = 'en-US'
-			    recognition.start()
-
-                recognition.onresult = function(event){
-			        for (var i = event.resultIndex; i < event.results.length; ++i){
-			    	    self.speech = event.results[i][0].transcript
-			        }
-			    }
-
-			    recognition.onend = function(){
-				    recognition.stop()
-                    self.micro = false
-                    self.autosubmit(self.speech)
-			    }
-            }
-        }
+  name: 'app',
+  data: function() {
+    return {
+      answers: [],
+      query: '',
+      speech: this.$i18n.t('generic.defaultSpeech'),
+      micro: false,
+      muted: false,
+      online: navigator.onLine,
+      Config
     }
+  },
+  watch: {
+    answers: function(val) {
+      setTimeout(() => {
+        document
+          .querySelector('.copyright')
+          .scrollIntoView({ behavior: 'smooth' })
+      }, 2) // if new answers arrive, wait for render and then smoothly scroll down to .copyright selector, used as anchor
+    }
+  },
+  methods: {
+    submit() {
+      client.textRequest(this.query).then(response => {
+        // console.log('response', response)
+        this.answers.push(response)
+        this.handle(response) // <- handle the response in handle() method
+
+        this.query = ''
+        this.speech = this.$i18n.t('generic.defaultSpeech') // <- reset query and speech
+      })
+    },
+    handle(response) {
+      if (
+        response.result.fulfillment.speech ||
+        response.result.fulfillment.messages[0].type == 'simple_response'
+      ) {
+        let speech = new SpeechSynthesisUtterance(
+          response.result.fulfillment.speech ||
+            response.result.fulfillment.messages[0].textToSpeech
+        )
+        speech.voiceURI = 'native'
+        speech.lang = Config.lang.speech
+
+        if (this.muted == false) window.speechSynthesis.speak(speech) // <- Speech output if microphone is allowed
+      }
+    },
+    autosubmit(suggestion) {
+      this.query = suggestion
+      this.submit()
+    },
+    mute(mode) {
+      this.muted = mode
+    },
+    microphone(mode) {
+      this.micro = mode
+      let self = this // <- correct scope
+
+      if (mode == true) {
+        let recognition = new webkitSpeechRecognition() // <- chrome speech recognition
+
+        recognition.interimResults = true
+        recognition.lang = Config.lang.recognition
+        recognition.start()
+
+        recognition.onresult = function(event) {
+          for (var i = event.resultIndex; i < event.results.length; ++i) {
+            self.speech = event.results[i][0].transcript
+          }
+        }
+
+        recognition.onend = function() {
+          recognition.stop()
+          self.micro = false
+          self.autosubmit(self.speech)
+        }
+      }
+    }
+  }
 }
 </script>
