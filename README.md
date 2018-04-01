@@ -104,12 +104,20 @@ First of all change all `title` and `meta` tags in `index.html`
 
 Then go to `manifest.json` and edit it, add some icons, change the application name and colors.
 
-Open `src` directory
-
-This directory contains source code for the web-app. The App source code is in `App.vue` file. You should change my `accessToken` to yours, so you can connect and use your agent. Optionally you can also change the main color of app, by changing `$color` variable in sass style.
-
 To connect your bot, you first need to create one. You can do it by visiting [Dialogflow website](https://dialogflow.com). Then create your intents and add Google Assistant responses.
 
-Then grab your token and replace current one with yours. You can do it by opening `App.vue` and searching for `new ApiAiClient`.
+Open `config.js` and change the `token` variable, to connect your bot. You can also translate the strings to your language
+
+Example
+
+```js
+export default {
+    app: {
+        token: "9d686a47b1de48bab431e94750d1cd87"
+    }
+}
+```
+
+if you want to change color open `src/App.sass` and change the `$color` variable
 
 # Thank you, stay updated!

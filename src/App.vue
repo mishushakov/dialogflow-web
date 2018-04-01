@@ -5,7 +5,7 @@
     <div class="query">
         <div class="wrapper" v-if="micro == false">
             <i class="material-icons iicon" @click="microphone(true)">mic</i>
-            <input aria-label="Ask me something" autocomplete="off" v-model="query" class="queryform" @keyup.enter="submit()" placeholder="Ask me something..." autofocus type="text">
+            <input :aria-label="config.locale.strings.queryTitle" autocomplete="off" v-model="query" class="queryform" @keyup.enter="submit()" :placeholder="config.locale.strings.queryTitle" autofocus type="text">
             <i class="material-icons iicon t2s" @click="mute(true)" v-if="muted == false">volume_up</i>
             <i class="material-icons iicon t2s" @click="mute(false)" v-else>volume_off</i>
         </div>
@@ -25,9 +25,9 @@
                 <div class="material-icons up">arrow_upward</div>
                 <br>
                 <br>
-                    Hello, ask something to get started
+                    {{config.locale.strings.welcomeTitle}}
 
-                    <p class="mdc-typography--body2">You can type "Hello" for example. Or just press on the microphone to talk</p>
+                    <p class="mdc-typography--body2">{{config.locale.strings.welcomeDescription}}</p>
             </h1>
         </div>
 
@@ -37,9 +37,9 @@
                 <div class="material-icons up">cloud_off</div>
                 <br>
                 <br>
-                    Oh, no!
+                    {{config.locale.strings.offlineTitle}}
 
-                    <p class="mdc-typography--body2">It looks like you are not connected to the internet, this webpage <b>requires</b> internet connection, to process your requests</p>
+                    <p class="mdc-typography--body2">{{config.locale.strings.offlineDescription}}</p>
             </h1>
         </div>
 
@@ -69,7 +69,7 @@
                         <div class="mdc-card" v-if="r.type == 'basic_card'">
                             <img :title="r.image.accessibilityText" :alt="r.image.accessibilityText" class="mdc-card__media-item" :src="r.image.url" v-if="r.image">
                             <section class="mdc-card__primary">
-                                <h1 class="mdc-card__title mdc-card__title">{{r.title}}</h1>
+                                <h1 class="mdc-card__title">{{r.title}}</h1>
                                 <br>
                                 <h2 class="mdc-card__subtitle">{{r.subtitle}}</h2>
                             </section>
@@ -77,7 +77,7 @@
                                 {{r.formattedText}}
                             </section>
                             <section class="mdc-card__actions" v-for="button in r.buttons">
-                                <a class="mdc-button mdc-button--compact mdc-button--primary mdc-card__action" target="_blank" :href="button.openUrlAction.url">{{button.title}} <i class="material-icons openlink">open_in_new</i></a>
+                                <a class="mdc-button mdc-button--compact themed mdc-card__action" target="_blank" :href="button.openUrlAction.url">{{button.title}} <i class="material-icons openlink">open_in_new</i></a>
                             </section>
                         </div>
 
@@ -97,7 +97,7 @@
                                     <div class="mdc-card slide">
                                         <img class="mdc-card__media-item" :src="item.image.url" v-if="item.image">
                                         <section class="mdc-card__primary">
-                                            <h1 class="mdc-card__title mdc-card__title mdc-theme--primary" @click="autosubmit(item.optionInfo.key)">{{item.title}}</h1>
+                                            <h1 class="mdc-card__title themed" @click="autosubmit(item.optionInfo.key)">{{item.title}}</h1>
                                         </section>
                                         <section class="mdc-card__supporting-text">
                                             {{item.description}}
@@ -144,209 +144,22 @@
         </table>
 
         <br>
-        <p class="copyright" v-if="answers.length > 0" id="bottom">Proudly powered by <a href="https://mish.io">Ushakov</a> & <a href="https://dialogflow.com">Dialogflow</a></p>
-
+        <p class="copyright" v-if="answers.length > 0 && config.app.watermark">Proudly powered by <a href="https://mish.io">Ushakov</a> & <a href="https://dialogflow.com">Dialogflow</a></p>
+        <a id="bottom"></a>
     </main>
 </section>
 </template>
 
 <style lang="sass">
 @import url('https://fonts.googleapis.com/css?family=Roboto')
-
-$color: #FF9800
-
-\:root
-  --mdc-theme-primary: $color
-
-body
-    margin: 0
-    background-color: #F5F5F5
-    font-family: 'Roboto', sans-serif
-
-.wrapper
-    max-width: 500px
-    margin-left: auto
-    margin-right: auto
-
-.wrapper.ai-window
-    padding: 1rem
-
-.up
-    font-size: 32px
-    background-color: white
-    padding: 10px
-    border-radius: 50%
-
-.title
-    vertical-align: middle
-    text-align: center
-    font-weight: 700
-    color: rgba(0,0,0,0.7)
-    margin-top: 30%
-
-.query
-    padding: 16px 0px
-    background-color: white
-    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24)
-    z-index: 999
-    position: fixed
-    width: 100%
-
-.queryform
-    border: 0
-    width: 100% - 20%
-    margin-left: 60px
-    font-size: 16px
-    outline: none
-    color: rgba(0,0,0,0.8)
-    font-weight: 500
-
-    @media screen and (max-width: 320px)
-        width: 100% - 35%
-
-.iicon
-    margin-left: 20px
-    position: absolute
-    vertical-align: middle
-    color: rgba(0,0,0,0.8)
-    cursor: pointer
-
-.recording
-    color: #F44336
-
-.iicon.t2s
-    margin-left: 10px
-    margin-right: 20px
-
-    @media screen and (max-width: 720px)
-        right: 0
-
-.chat-window
-    width: 100%
-
-.bubble
-    max-width: 300px
-    background-color: #E1E1E1
-    padding: 16px
-    border-radius: 8px
-    color: rgba(0,0,0,0.7)
-    float: right
-    animation: msg .25s linear
-
-.bubble.bot
-    background-color: white
-    float: left
-    margin-right: 10px
-
-td
-    margin-top: 30px
-    margin-bottom: 10px
-
-.mdc-card
-    background-color: white
-    max-width: 300px
-    margin-bottom: 5px
-    animation: msg .45s ease-in-out
-
-.slide
-    margin: 5px
-    max-width: 300px
-
-.slider
-    max-width: 300px
-    margin-left: -5px
-
-.mdc-fab
-    background-color: white
-    color: $color
-    
-.rightnav
-    margin-left: -32px
-
-    @media screen and (max-width: 720px) 
-            margin-left: -35px
-
-    @media screen and (max-width: 320px) 
-            margin-left: -70px
-
-.leftnav
-    margin-right: -35px
-
-    @media screen and (max-width: 720px)
-        display: none
-
-.openlink
-    vertical-align: middle
-    margin-top: -5px
-    margin-left: 5px
-
-.mdc-card__media-item
-    height: auto
-    width: 100%
-    margin-top: -5px
-
-.chips
-    margin-left: -10px
-
-.suggestion
-    margin-top: 10px
-    float: left
-    margin-left: 10px
-    padding: 10px
-    border: 2px rgba(0,0,0,0.5) solid
-    color: rgba(0,0,0,0.5)
-    border-radius: 6px
-    cursor: pointer
-    animation: controls .25s linear
-
-.suggestion:active
-    border: 2px rgba(0,0,0,1) solid
-    color: rgba(0,0,0,1)
-
-.suggestion.link
-    color: white
-    background-color: $color
-    border: 2px $color solid
-
-.suggestion.link:active
-    background-color: darken($color, 10%)
-    border: 2px darken($color, 10%) solid
-
-.mdc-list-item__start-detail
-    border-radius: 50%
-
-@keyframes msg
-    0%
-        opacity: 0
-        transform: scale(0.8)
-    100%
-        opacity: 1
-        transform: scale(1)
-
-@keyframes controls
-    0%
-        transform: scaleY(0)
-    100%
-        transform: scaleY(1)
-
-.copyright
-    font-weight: 600
-    color: rgba(0,0,0,0.8)
-
-.copyright a
-    text-decoration: none
-    color: rgba(0,0,0,0.8)
-    border-bottom: 2px solid transparent
-
-.copyright a:hover
-    color: $color
-    border-bottom: 2px solid $color
-    
+@import "App.sass"
 </style>
 
 <script>
 import { ApiAiClient } from 'api-ai-javascript'
-const client = new ApiAiClient({accessToken: '9d686a47b1de48bab431e94750d1cd87'}) // <- replace it with yours
+import config from './../config'
+
+const client = new ApiAiClient({accessToken: config.app.token}) // <- replace it with yours
 
 export default {
     name: 'app',
@@ -354,19 +167,20 @@ export default {
         return {
             answers: [],
             query: '',
-            speech: 'Go ahead, im listening...',
+            speech: config.locale.strings.voiceTitle,
             micro: false,
-            muted: false,
-            online: navigator.onLine
+            muted: config.app.muted,
+            online: navigator.onLine,
+            config
         }
     },
     watch: {
         answers: function(val){
             setTimeout(() => { 
-                document.querySelector('.copyright').scrollIntoView({ 
+                document.querySelector('#bottom').scrollIntoView({ 
                     behavior: 'smooth' 
                 })
-            }, 2) // if new answers arrive, wait for render and then smoothly scroll down to .copyright selector, used as anchor
+            }, 2) // if new answers arrive, wait for render and then smoothly scroll down to #bottom selector, used as anchor
         }
     },
     methods: {
@@ -376,14 +190,14 @@ export default {
                 this.handle(response) // <- handle the response in handle() method
 
                 this.query = ''
-                this.speech = 'Go ahead, im listening...' // <- reset query and speech
+                this.speech = config.locale.strings.voiceTitle // <- reset query and speech
             })
         },
         handle(response){
             if(response.result.fulfillment.speech || response.result.fulfillment.messages[0].type == 'simple_response'){
                 let speech = new SpeechSynthesisUtterance(response.result.fulfillment.speech || response.result.fulfillment.messages[0].textToSpeech)
                 speech.voiceURI = 'native'
-                speech.lang = 'en-GB' // <- Nice british accent
+                speech.lang = config.locale.settings.speechLang // <- Nice british accent
 
                 if(this.muted == false) window.speechSynthesis.speak(speech) // <- Speech output if microphone is allowed
             }
@@ -403,7 +217,7 @@ export default {
                 let recognition = new webkitSpeechRecognition() // <- chrome speech recognition
 
                 recognition.interimResults = true
-                recognition.lang = 'en-US'
+                recognition.lang = config.locale.strings.recognitionLang
 			    recognition.start()
 
                 recognition.onresult = function(event){

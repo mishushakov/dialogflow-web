@@ -67,7 +67,7 @@ if (process.env.NODE_ENV === 'production') {
       parallel: true,
       sourceMap: true,
       uglifyOptions: {
-        ie8: false,
+        ie8: true,
       }
     }),
     new webpack.LoaderOptionsPlugin({
