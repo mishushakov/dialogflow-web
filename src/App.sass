@@ -6,7 +6,7 @@ $color: #FF9800
 body
     margin: 0
     background-color: #F5F5F5
-    font-family: 'Roboto', sans-serif
+    font-family: 'Roboto', 'Google Sans', sans-serif
 
 .themed
     color: $color !important
@@ -141,24 +141,28 @@ td
     float: left
     margin-left: 10px
     padding: 10px
-    border: 2px rgba(0,0,0,0.5) solid
-    color: rgba(0,0,0,0.5)
-    border-radius: 6px
+    color: rgba(0,0,0,0.7)
+    background-color: white
+    border: 1.5px solid rgba(0,0,0,0.2)
+    border-radius: 50px
     cursor: pointer
     animation: controls .25s linear
 
 .suggestion:active
-    border: 2px rgba(0,0,0,1) solid
     color: rgba(0,0,0,1)
+
+.suggestion:hover
+    color: $color
+    border: 1.5px solid $color
 
 .suggestion.link
     color: white
     background-color: $color
-    border: 2px $color solid
+    border: 1px solid $color
 
 .suggestion.link:active
     background-color: darken($color, 10%)
-    border: 2px darken($color, 10%) solid
+    border: 1px darken($color, 10%) solid
 
 .mdc-list-item__start-detail
     border-radius: 50%

@@ -197,7 +197,7 @@ export default {
             if(response.result.fulfillment.speech || response.result.fulfillment.messages[0].type == 'simple_response'){
                 let speech = new SpeechSynthesisUtterance(response.result.fulfillment.speech || response.result.fulfillment.messages[0].textToSpeech)
                 speech.voiceURI = 'native'
-                speech.lang = config.locale.settings.speechLang // <- Nice british accent
+                speech.lang = config.locale.settings.speechLang
 
                 if(this.muted == false) window.speechSynthesis.speak(speech) // <- Speech output if microphone is allowed
             }
@@ -217,7 +217,7 @@ export default {
                 let recognition = new webkitSpeechRecognition() // <- chrome speech recognition
 
                 recognition.interimResults = true
-                recognition.lang = config.locale.strings.recognitionLang
+                recognition.lang = config.locale.settings.recognitionLang
 			    recognition.start()
 
                 recognition.onresult = function(event){
