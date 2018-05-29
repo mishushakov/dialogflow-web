@@ -10,7 +10,7 @@
   "dependencies": {
     "api-ai-javascript": "^2.0.0-beta.21",
     "vue": "^2.2.1",
-    "vue-carousel": "^0.6.5"
+    "vue-carousel": "^0.8.0"
   },
   "devDependencies": {
     "babel-core": "^6.0.0",
