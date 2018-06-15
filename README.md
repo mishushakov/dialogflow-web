@@ -4,7 +4,7 @@
 
 # Dialogflow for Web
 
-This is an unofficial Web client for Dialogflow, i built it, to support Google Assistant rich-responses and to delivery the most out of the Platform. The executable is around 300KB
+This is an unofficial Web client for Dialogflow, i built it, to support Google Assistant rich-responses and to delivery the most out of the Platform. The executable is around 100KB
 
 ## What's included
 
@@ -38,6 +38,7 @@ This is an unofficial Web client for Dialogflow, i built it, to support Google A
 - Combination of all above
 - Fancy animations and visual feedback
 - Widget mode, for more info see https://github.com/MishUshakov/dialogflow-widget
+- Googling unknown requests
 
 ## What will be supported soon
 - Custom inputs and elements using custom payload
@@ -56,7 +57,7 @@ Open your cloned folder. Then, using your favorite package manager get the depen
 
 Example using npm
 
-`npm init`
+`npm install`
 
 Example using yarn
 
@@ -119,5 +120,16 @@ export default {
 ```
 
 if you want to change color open `src/App.sass` and change the `$color` variable
+
+## Frequently Asked Questions
+
+- Q: I changed the token and the responses are the same as with previous token
+- A: Make sure you have **cleaned your cache** and **rebuilt your app**
+
+- Q: V2 Support?
+- A: I have planned it, @thomasgcompany has a workaround on that, keep watching issue #33
+
+- How can i help?
+- You can contribute to the library or/and buy me some snacks :)
 
 # Thank you, stay updated!

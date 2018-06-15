@@ -1,6 +1,5 @@
 importScripts('/worker-polyfill.js')
 self.addEventListener('install', function(event) {
-
     console.log("Dialogflow Service Worker installed")
     event.waitUntil(caches.open('dialogflow').then(function(cache) {
         return cache.addAll([
@@ -8,8 +7,7 @@ self.addEventListener('install', function(event) {
             '/index.html',
             'https://fonts.googleapis.com/icon?family=Material+Icons',
             'https://unpkg.com/material-components-web@0.20.0/dist/material-components-web.min.css',
-            '/dist/build.js',
-            '/dist/build.js.map'
+            '/dist/build.js'
         ])
     }))
 })

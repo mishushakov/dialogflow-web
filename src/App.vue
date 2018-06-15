@@ -88,8 +88,8 @@
                                     :perPage="1" 
                                     :navigationEnabled="true"
                                     :paginationEnabled="false"
-                                    navigationNextLabel="<button class='mdc-fab material-icons rightnav'><span class='mdc-fab__icon'>keyboard_arrow_right</span></button>"
-                                    navigationPrevLabel="<button class='mdc-fab material-icons leftnav'><span class='mdc-fab__icon'>keyboard_arrow_left</span></button>"
+                                    navigationNextLabel="<button class='mdc-fab mdc-fab--mini material-icons rightnav'><span class='mdc-fab__icon'>keyboard_arrow_right</span></button>"
+                                    navigationPrevLabel="<button class='mdc-fab mdc-fab--mini material-icons leftnav'><span class='mdc-fab__icon'>keyboard_arrow_left</span></button>"
                                     :navigationClickTargetSize="0"
                                     :loop="true">
 
@@ -138,13 +138,21 @@
                             </div>
                         </div>
 
+                        <!-- Bot message types / Google Suggestion Chip -->
+
+                        <div v-if="r.unknown == true" class="google-chip chips">
+                            <a class="suggestion" :href="'https://www.google.com/search?q=' + r.text" target="_blank">
+                                Search for "{{r.text}}" on Google <i class="material-icons openlink">search</i>
+                            </a>
+                        </div>
+
                     </div>
                 </td>
             </tr>
         </table>
 
         <br>
-        <p class="copyright" v-if="answers.length > 0 && config.app.watermark">Proudly powered by <a href="https://mish.io">Ushakov</a> & <a href="https://dialogflow.com">Dialogflow</a></p>
+        <p class="copyright" v-if="answers.length > 0">Proudly powered by <a href="https://mish.io">Ushakov</a> & <a href="https://dialogflow.com">Dialogflow</a></p>
         <a id="bottom"></a>
     </main>
 </section>
@@ -186,6 +194,11 @@ export default {
     methods: {
         submit(){
             client.textRequest(this.query).then((response) => {
+                if(response.result.action == "input.unknown" && this.config.app.googleIt == true){
+                    response.result.fulfillment.messages[0].unknown = true
+                    response.result.fulfillment.messages[0].text = response.result.resolvedQuery
+                } // if the googleIt is enabled, show the button
+
                 this.answers.push(response)
                 this.handle(response) // <- handle the response in handle() method
 

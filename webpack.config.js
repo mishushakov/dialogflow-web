@@ -63,13 +63,7 @@ if (process.env.NODE_ENV === 'production') {
         NODE_ENV: '"production"'
       }
     }),
-    new UglifyJSPlugin({
-      parallel: true,
-      sourceMap: true,
-      uglifyOptions: {
-        ie8: true,
-      }
-    }),
+    new UglifyJSPlugin(),
     new webpack.LoaderOptionsPlugin({
       minimize: true
     })

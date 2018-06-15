@@ -95,6 +95,8 @@ td
     max-width: 300px
     margin-bottom: 5px
     animation: msg .45s ease-in-out
+    border-radius: 8px
+    box-shadow: 0 1px 4px 0 rgba(32, 33, 36, 0.28)
 
 .slide
     margin: 5px
@@ -109,16 +111,16 @@ td
     color: $color
     
 .rightnav
-    margin-left: -32px
+    margin-left: -25px
 
     @media screen and (max-width: 720px) 
-            margin-left: -35px
+            margin-left: -25px
 
     @media screen and (max-width: 320px) 
             margin-left: -70px
 
 .leftnav
-    margin-right: -35px
+    margin-right: -25px
 
     @media screen and (max-width: 720px)
         display: none
@@ -147,6 +149,7 @@ td
     border-radius: 50px
     cursor: pointer
     animation: controls .25s linear
+    text-decoration: none
 
 .suggestion:active
     color: rgba(0,0,0,1)
@@ -193,3 +196,6 @@ td
 .copyright a:hover
     color: $color
     border-bottom: 2px solid $color
+
+.google-chip
+    margin-top: 52px
