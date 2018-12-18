@@ -1,5 +1,5 @@
 <template>
-<section id ="app">
+<main id="app">
 
     <!-- The input -->
     <div class="query">
@@ -14,7 +14,7 @@
         </div>
     </div>
 
-    <main class="wrapper ai-window">
+    <section class="wrapper ai-window">
 
         <br>
         <br>
@@ -154,8 +154,8 @@
         <br>
         <p class="copyright" v-if="answers.length > 0">Proudly powered by <a href="https://ushakov.co">Ushakov</a> & <a href="https://dialogflow.com">Dialogflow</a></p>
         <a id="bottom"></a>
-    </main>
-</section>
+    </section>
+</main>
 </template>
 
 <style lang="sass">

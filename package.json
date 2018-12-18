@@ -1,7 +1,7 @@
 {
   "name": "dialogflow-web",
   "description": "Dialogflow Progressive Web Application",
-  "version": "1.9.0",
+  "version": "1.9.5",
   "author": "Ushakov",
   "scripts": {
     "dev": "cross-env NODE_ENV=development webpack-dev-server --open --hot",
