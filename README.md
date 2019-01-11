@@ -1,6 +1,8 @@
 ![](https://imgur.com/YkOoS4h.png)
 ![](https://imgur.com/g3KyOqV.png)
 
+#### 🚨 DEPRECATION WARNING: THIS PROJECT IS NO LONGER SUPPORTED, MOVE TO [V2](https://github.com/MishUshakov/dialogflow-web-v2)
+
 # Dialogflow for Web
 
 > Dialogflow lets you build conversational interfaces on top of your products and services by providing a powerful natural language understanding (NLU) engine to process and understand natural language input
@@ -10,12 +12,6 @@ This is a unofficial Web client for Dialogflow, it was built, to support Google 
 [You can buy me some snacks, to support the development](https://paypal.me/mishushakov)
 
 [Or just hire me](https://linkedin.com/in/mishushakov/)
-
-## About Dialogflow V2 support
-
-This repository currently does only support V1 API, you can still use this client till October 2019, but, when the new client arrives, this repository will be archieved and the focus will move towards the new one
-
-Dialogflow for Web V2 will be released in Q1 2019 in a separate repository. I have fully rewritten and redesigned the client from scratch for even better experience. You will also need to install "Dialogflow Gateway" - a software, which connects Dialogflow gRPC API to HTTP Clients. It will also be released around the same date
 
 ## What's included
 
