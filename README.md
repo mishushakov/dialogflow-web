@@ -1,17 +1,18 @@
-![](https://imgur.com/YkOoS4h.png)
-![](https://imgur.com/g3KyOqV.png)
+## 🚨 [DEPRECATION WARNING: THIS PROJECT IS NO LONGER SUPPORTED, MOVE TO DIALOGFLOW FOR WEB V2](https://github.com/MishUshakov/dialogflow-web-v2)
 
-#### 🚨 DEPRECATION WARNING: THIS PROJECT IS NO LONGER SUPPORTED, MOVE TO [V2](https://github.com/MishUshakov/dialogflow-web-v2)
+![](https://camo.githubusercontent.com/7bee509b607c0b359b2e00d3bdfd52085002f2cf/68747470733a2f2f692e696d6775722e636f6d2f4a3861544977742e706e67)
+
+---
 
 # Dialogflow for Web
+
+![](https://imgur.com/g3KyOqV.png)
 
 > Dialogflow lets you build conversational interfaces on top of your products and services by providing a powerful natural language understanding (NLU) engine to process and understand natural language input
 
 This is a unofficial Web client for Dialogflow, it was built, to support Google Assistant rich-responses and to make the most out of the Platform available to Web
 
-[You can buy me some snacks, to support the development](https://paypal.me/mishushakov)
-
-[Or just hire me](https://linkedin.com/in/mishushakov/)
+![](https://imgur.com/YkOoS4h.png)
 
 ## What's included
 
